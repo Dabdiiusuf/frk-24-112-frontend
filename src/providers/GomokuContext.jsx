@@ -1,24 +1,38 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const GomokuContext = createContext(null);
 
 const GomokuContextProvider = ({ children }) => {
-  //   const [playerOne, setPlayerOne] = useState("");
-  //   const [playerTwo, setPlayerTwo] = useState("");
-  //   const [randomText, setRandomText] = useState("");
+  const [playerOne, setPlayerOne] = useState("");
+  const [playerTwo, setPlayerTwo] = useState("");
+  const [randomText, setRandomText] = useState("");
+  const DrawText =
+    "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
+
+  useEffect(() => {
+    const RandomTextArray = [
+      "Yo-ho-ho! The match be over, and  claims the treasure o’ triumph! The rest be feedin’ the fishes!",
+      "Shiver me timbers! The game’s end has come, and it be Daniel who hoists the black flag o’ victory!",
+      "Arrr, the board be conquered! Daniel rules these seas, leavin’ naught but wreckage in his wake!",
+      "Game over, ye scallywags! Daniel be the last pirate standin’, with the crown o’ glory upon his head!",
+      "Blimey! The cannons be silenced and the battle be won. Daniel sails away with victory’s bounty!",
+      "Arrr! The seas be still, the battle be done... Cap’n Daniel stands victorious upon the bones of his foes!",
+    ];
+    const textIndex = Math.floor(Math.random() * RandomTextArray.length);
+    setRandomText(RandomTextArray[textIndex]);
+  }, []);
 
   return (
     <GomokuContext.Provider
-      value={
-        {
-          // playerOne,
-          // playerTwo,
-          // randomText,
-          // setPlayerOne,
-          // setPlayerTwo,
-          // setRandomText,
-        }
-      }
+      value={{
+        playerOne,
+        playerTwo,
+        randomText,
+        DrawText,
+        setPlayerOne,
+        setPlayerTwo,
+        setRandomText,
+      }}
     >
       {children}
     </GomokuContext.Provider>

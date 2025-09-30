@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "PirateFont";
+  src: url("./assets/fonts/Treasuremap-Ea1vj.ttf") format("truetype");
+}
+
+* {
+  font-family: "PirateFont";
+}
