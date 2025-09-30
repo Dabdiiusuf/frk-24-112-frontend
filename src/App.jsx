@@ -6,14 +6,14 @@ import { Board } from "frk-24-112-components";
 export default function App() {
   const { isNewGame } = useContext(ApiContext);
 
-  if (!isNewGame?.board) return <p>Is Loading</p>;
-
-  const { rows, cols, tiles } = isNewGame.board;
-
   const handleCellClick = useCallback((row, col, value) => {
     console.log("Clicked:", { row, col, value });
     //will work with icon placement logic here later this is just a start..
   }, []);
+
+  if (!isNewGame?.board) return <p>Is Loading</p>;
+
+  const { rows, cols, tiles } = isNewGame.board;
 
   return (
     <Board
