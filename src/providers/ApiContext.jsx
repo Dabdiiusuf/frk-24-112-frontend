@@ -38,10 +38,10 @@ const ApiContextProvider = ({ children }) => {
 
     const fetchNewGame = async () => {
       try {
-        const res = fetch(
+        const res = await fetch(
           `${API_BASE_URL}game/015cdc04-4d22-46f7-8d8e-f1879bb9bf1b`
         );
-        const data = (await res).json();
+        const data = await res.json();
         setIsNewGame(data);
         console.log("New Game:", data);
       } catch (e) {
@@ -51,10 +51,10 @@ const ApiContextProvider = ({ children }) => {
 
     const fetchWhiteWin = async () => {
       try {
-        const res = fetch(
+        const res = await fetch(
           `${API_BASE_URL}game/6d3e9d43-9d19-4fb5-a684-b8514f0e4810`
         );
-        const data = (await res).json();
+        const data = await res.json();
         setWhiteWin(data);
         console.log("White wins:", data);
       } catch (e) {
@@ -64,10 +64,10 @@ const ApiContextProvider = ({ children }) => {
 
     const fetchBlackWin = async () => {
       try {
-        const res = fetch(
+        const res = await fetch(
           `${API_BASE_URL}game/ebdf150a-4740-42ea-a5a7-dfce2f6f3725`
         );
-        const data = (await res).json();
+        const data = await res.json();
         setBlackWin(data);
         console.log("Black wins:", data);
       } catch (e) {
