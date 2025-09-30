@@ -7,6 +7,9 @@ const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
   const [getID, setGetID] = useState("");
   const [isDraw, setIsDraw] = useState("");
+  const [isNewGame, setIsNewGame] = useState("");
+  const [whiteWin, setWhiteWin] = useState("");
+  const [blackWin, setBlackWin] = useState("");
 
   useEffect(() => {
     const fetchGamesID = async () => {
@@ -32,12 +35,59 @@ const ApiContextProvider = ({ children }) => {
         console.error(e);
       }
     };
+
+    const fetchNewGame = async () => {
+      try {
+        const res = fetch(
+          `${API_BASE_URL}game/015cdc04-4d22-46f7-8d8e-f1879bb9bf1b`
+        );
+        const data = (await res).json();
+        setIsNewGame(data);
+        console.log("New Game:", data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const fetchWhiteWin = async () => {
+      try {
+        const res = fetch(
+          `${API_BASE_URL}game/6d3e9d43-9d19-4fb5-a684-b8514f0e4810`
+        );
+        const data = (await res).json();
+        setWhiteWin(data);
+        console.log("White wins:", data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const fetchBlackWin = async () => {
+      try {
+        const res = fetch(
+          `${API_BASE_URL}game/ebdf150a-4740-42ea-a5a7-dfce2f6f3725`
+        );
+        const data = (await res).json();
+        setBlackWin(data);
+        console.log("Black wins:", data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
     fetchGamesID();
     fetchDrawGame();
+    fetchNewGame();
+    fetchWhiteWin();
+    fetchBlackWin();
   }, [API_BASE_URL]);
 
   return (
-    <ApiContext.Provider value={{ getID }}>{children}</ApiContext.Provider>
+    <ApiContext.Provider
+      value={{ getID, isDraw, isNewGame, whiteWin, blackWin }}
+    >
+      {children}
+    </ApiContext.Provider>
   );
 };
 
