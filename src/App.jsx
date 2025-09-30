@@ -1,7 +1,12 @@
 import "./App.css";
 import { useContext, useCallback } from "react";
 import { ApiContext } from "./providers/ApiContext";
-import { Board, GameBoard, Background } from "frk-24-112-components";
+import {
+  Board,
+  GameBoard,
+  Background,
+  ModalWindow,
+} from "frk-24-112-components";
 
 export default function App() {
   const { isNewGame } = useContext(ApiContext);
@@ -27,6 +32,7 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
+        <ModalWindow isDraw={isDraw} />
       </Background>
     </div>
   );
