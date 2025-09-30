@@ -1,15 +1,15 @@
-import { createContext, use, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { ConfigContext } from "./ConfigContext";
 
 const ApiContext = createContext(null);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
-  const [getID, setGetID] = useState("");
-  const [isDraw, setIsDraw] = useState("");
-  const [isNewGame, setIsNewGame] = useState("");
-  const [whiteWin, setWhiteWin] = useState("");
-  const [blackWin, setBlackWin] = useState("");
+  const [getID, setGetID] = useState(null);
+  const [isDraw, setIsDraw] = useState(null);
+  const [isNewGame, setIsNewGame] = useState(null);
+  const [whiteWin, setWhiteWin] = useState(null);
+  const [blackWin, setBlackWin] = useState(null);
 
   useEffect(() => {
     const fetchGamesID = async () => {

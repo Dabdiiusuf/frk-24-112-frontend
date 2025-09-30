@@ -4,11 +4,11 @@ import { ApiContext } from "./providers/ApiContext";
 import { Board } from "frk-24-112-components";
 
 export default function App() {
-  const { game } = useContext(ApiContext);
+  const { isNewGame } = useContext(ApiContext);
 
-  if (!game?.board) return <p>Is Loading</p>;
+  if (!isNewGame?.board) return <p>Is Loading</p>;
 
-  const { rows, cols, tiles } = game.board;
+  const { rows, cols, tiles } = isNewGame.board;
 
   const handleCellClick = useCallback((row, col, value) => {
     console.log("Clicked:", { row, col, value });
