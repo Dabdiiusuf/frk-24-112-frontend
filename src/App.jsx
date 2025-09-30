@@ -12,7 +12,7 @@ export default function App() {
 
   const handleCellClick = useCallback((row, col, value) => {
     console.log("Clicked:", { row, col, value });
-    //will work with tiles logic here later this is just a start..
+    //will work with icon placement logic here later this is just a start..
   }, []);
 
   return (
