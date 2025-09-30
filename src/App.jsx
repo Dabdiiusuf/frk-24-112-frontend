@@ -1,7 +1,7 @@
 import "./App.css";
 import { useContext, useCallback } from "react";
 import { ApiContext } from "./providers/ApiContext";
-import { Board, GameBoard } from "frk-24-112-components";
+import { Board, GameBoard, Background } from "frk-24-112-components";
 
 export default function App() {
   const { isNewGame } = useContext(ApiContext);
@@ -17,15 +17,17 @@ export default function App() {
 
   return (
     <div>
-      <GameBoard>
-        <Board
-          rows={rows}
-          cols={cols}
-          tiles={tiles}
-          size={57}
-          onCellClick={handleCellClick}
-        />
-      </GameBoard>
+      <Background>
+        <GameBoard>
+          <Board
+            rows={rows}
+            cols={cols}
+            tiles={tiles}
+            size={57}
+            onCellClick={handleCellClick}
+          />
+        </GameBoard>
+      </Background>
     </div>
   );
 }
