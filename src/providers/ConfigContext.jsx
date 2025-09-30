@@ -2,9 +2,17 @@ import { createContext } from "react";
 
 const ConfigContext = createContext(null);
 
-const ConfigContextProvider = ({ children, value = {} }) => {
+const ConfigContextProvider = ({ children }) => {
+  const API_BASE_URL = "http://localhost:3001/api/gomoku/";
+
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <ConfigContext.Provider
+      value={{
+        API_BASE_URL,
+      }}
+    >
+      {children}
+    </ConfigContext.Provider>
   );
 };
 
