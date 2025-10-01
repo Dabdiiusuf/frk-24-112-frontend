@@ -43,8 +43,6 @@ export default function App() {
           />
         </GameBoard>
 
-        <GCP />
-
         {!isNewGame ? (
           <Instructions
             fetchNewGame={fetchNewGame}
@@ -55,7 +53,7 @@ export default function App() {
         ) : (
           ""
         )}
-
+        <GCP />
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
         ) : (
