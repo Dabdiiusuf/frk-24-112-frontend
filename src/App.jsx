@@ -14,6 +14,7 @@ import {
 export default function App() {
   const { isNewGame, fetchNewGame, playerOne, playerTwo, createPlayers } =
     useContext(ApiContext);
+
   const { randomText, DrawText } = useContext(GomokuContext);
 
   const handleCellClick = useCallback((row, col, value) => {
@@ -41,6 +42,7 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
+
         {!isNewGame ? (
           <Instructions
             fetchNewGame={fetchNewGame}
@@ -51,7 +53,7 @@ export default function App() {
         ) : (
           ""
         )}
-
+        <GCP />
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
         ) : (
