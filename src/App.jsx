@@ -41,7 +41,6 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
-        <GCP />
         {!isNewGame ? (
           <Instructions
             fetchNewGame={fetchNewGame}
