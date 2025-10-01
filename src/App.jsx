@@ -8,15 +8,12 @@ import {
   Background,
   GameOver,
   Instructions,
+  GCP,
 } from "frk-24-112-components";
 
 export default function App() {
-  const {
-    isNewGame,
-    isDraw,
-    fetchNewGame,
-    inputValue = "Daniel",
-  } = useContext(ApiContext);
+  const { isNewGame, fetchNewGame, playerOne, playerTwo, createPlayers } =
+    useContext(ApiContext);
   const { randomText, DrawText } = useContext(GomokuContext);
 
   const handleCellClick = useCallback((row, col, value) => {
@@ -24,9 +21,13 @@ export default function App() {
     //will work with icon placement logic here later this is just a start..
   }, []);
 
-  if (!isNewGame?.board) return <p>Is Loading</p>;
+  // if (!isNewGame?.board) return <p>Is Loading</p>;
 
-  const { rows, cols, tiles } = isNewGame.board;
+  // const { rows, cols, tiles } = isNewGame.board;
+
+  const rows = isNewGame?.board?.rows ?? 16;
+  const cols = isNewGame?.board?.cols ?? 16;
+  const tiles = isNewGame?.board?.tiles ?? [];
 
   return (
     <div>
@@ -40,10 +41,17 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
-        <Instructions
-          fetchNewGame={fetchNewGame}
-          inputValue={inputValue}
-        />
+        <GCP />
+        {!isNewGame ? (
+          <Instructions
+            fetchNewGame={fetchNewGame}
+            playerOne={playerOne}
+            playerTwo={playerTwo}
+            createPlayers={createPlayers}
+          />
+        ) : (
+          ""
+        )}
 
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
