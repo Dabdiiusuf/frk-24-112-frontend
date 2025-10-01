@@ -12,8 +12,6 @@ const ApiContext = createContext(null);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
-  const [getID, setGetID] = useState(null);
-  const [isDraw, setIsDraw] = useState(null);
   const [isNewGame, setIsNewGame] = useState(null);
   const [playerOne, setplayerOne] = useState("");
   const [playerTwo, setplayerTwo] = useState("");
@@ -69,43 +67,11 @@ const ApiContextProvider = ({ children }) => {
     return;
   };
 
-  // useEffect(() => {
-  //   const fetchGamesID = async () => {
-  //     try {
-  //       const res = await fetch(`${API_BASE_URL}games`);
-  //       const data = await res.json();
-  //       setGetID(data);
-  //       console.log("Games:", data);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   };
-
-  //   const fetchDrawGame = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `${API_BASE_URL}game/88aaf28d-7fef-4028-9e94-7fdbbbd662a0`
-  //       );
-  //       const data = await res.json();
-  //       setIsDraw(data.state);
-  //       console.log("Draw game:", data);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   };
-
-  //   fetchGamesID();
-  //   fetchDrawGame();
-  //   // fetchNewGame();
-  // }, [API_BASE_URL]);
-
   //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
 
   return (
     <ApiContext.Provider
       value={{
-        getID,
-        isDraw,
         isNewGame,
         fetchNewGame,
         createPlayers,

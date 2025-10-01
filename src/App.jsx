@@ -8,17 +8,12 @@ import {
   Background,
   GameOver,
   Instructions,
+  GCP,
 } from "frk-24-112-components";
 
 export default function App() {
-  const {
-    isNewGame,
-    isDraw,
-    fetchNewGame,
-    playerOne,
-    playerTwo,
-    createPlayers,
-  } = useContext(ApiContext);
+  const { isNewGame, fetchNewGame, playerOne, playerTwo, createPlayers } =
+    useContext(ApiContext);
   const { randomText, DrawText } = useContext(GomokuContext);
 
   const handleCellClick = useCallback((row, col, value) => {
@@ -46,6 +41,7 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
+        <GCP />
         {!isNewGame ? (
           <Instructions
             fetchNewGame={fetchNewGame}
