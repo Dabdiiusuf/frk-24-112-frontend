@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { ConfigContext } from "./ConfigContext";
 
 const ApiContext = createContext(null);
@@ -10,6 +10,20 @@ const ApiContextProvider = ({ children }) => {
   const [isNewGame, setIsNewGame] = useState(null);
   const [whiteWin, setWhiteWin] = useState(null);
   const [blackWin, setBlackWin] = useState(null);
+
+  const fetchNewGame = useMemo(async () => {
+    try {
+      const res = await fetch(
+        `${API_BASE_URL}game/015cdc04-4d22-46f7-8d8e-f1879bb9bf1b`
+      );
+      const data = await res.json();
+      setIsNewGame(data);
+      console.log("New Game:", data);
+      console.log("New game created");
+    } catch (e) {
+      console.error(e);
+    }
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     const fetchGamesID = async () => {
@@ -29,21 +43,8 @@ const ApiContextProvider = ({ children }) => {
           `${API_BASE_URL}game/88aaf28d-7fef-4028-9e94-7fdbbbd662a0`
         );
         const data = await res.json();
-        setIsDraw(data);
+        setIsDraw(data.state);
         console.log("Draw game:", data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const fetchNewGame = async () => {
-      try {
-        const res = await fetch(
-          `${API_BASE_URL}game/015cdc04-4d22-46f7-8d8e-f1879bb9bf1b`
-        );
-        const data = await res.json();
-        setIsNewGame(data);
-        console.log("New Game:", data);
       } catch (e) {
         console.error(e);
       }
@@ -77,14 +78,14 @@ const ApiContextProvider = ({ children }) => {
 
     fetchGamesID();
     fetchDrawGame();
-    fetchNewGame();
+    // fetchNewGame();
     fetchWhiteWin();
     fetchBlackWin();
   }, [API_BASE_URL]);
 
   return (
     <ApiContext.Provider
-      value={{ getID, isDraw, isNewGame, whiteWin, blackWin }}
+      value={{ getID, isDraw, isNewGame, whiteWin, blackWin, fetchNewGame }}
     >
       {children}
     </ApiContext.Provider>

@@ -2,10 +2,16 @@ import "./App.css";
 import { useContext, useCallback } from "react";
 import { ApiContext } from "./providers/ApiContext";
 import { GomokuContext } from "./providers/GomokuContext";
-import { Board, GameBoard, Background, GameOver } from "frk-24-112-components";
+import {
+  Board,
+  GameBoard,
+  Background,
+  GameOver,
+  Instructions,
+} from "frk-24-112-components";
 
 export default function App() {
-  const { isNewGame, isDraw } = useContext(ApiContext);
+  const { isNewGame, isDraw, fetchNewGame } = useContext(ApiContext);
   const { randomText, DrawText } = useContext(GomokuContext);
 
   const handleCellClick = useCallback((row, col, value) => {
@@ -29,11 +35,13 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
-        {isDraw ? (
+        <Instructions fetchNewGame={fetchNewGame} />
+
+        {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
         ) : (
           <GameOver GameOverText={randomText} />
-        )}
+        )} */}
       </Background>
     </div>
   );
