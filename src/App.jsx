@@ -15,7 +15,9 @@ export default function App() {
     isNewGame,
     isDraw,
     fetchNewGame,
-    inputValue = "Daniel",
+    playerOne,
+    playerTwo,
+    createPlayers,
   } = useContext(ApiContext);
   const { randomText, DrawText } = useContext(GomokuContext);
 
@@ -44,10 +46,17 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
-        <Instructions
-          fetchNewGame={fetchNewGame}
-          inputValue={inputValue}
-        />
+
+        {!isNewGame ? (
+          <Instructions
+            fetchNewGame={fetchNewGame}
+            playerOne={playerOne}
+            playerTwo={playerTwo}
+            createPlayers={createPlayers}
+          />
+        ) : (
+          ""
+        )}
 
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />

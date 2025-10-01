@@ -15,6 +15,8 @@ const ApiContextProvider = ({ children }) => {
   const [getID, setGetID] = useState(null);
   const [isDraw, setIsDraw] = useState(null);
   const [isNewGame, setIsNewGame] = useState(null);
+  const [playerOne, setplayerOne] = useState("");
+  const [playerTwo, setplayerTwo] = useState("");
 
   const fetchNewGame = async () => {
     try {
@@ -22,15 +24,48 @@ const ApiContextProvider = ({ children }) => {
       const data = await res.json();
       localStorage.setItem("newGame", data.id);
       console.log("New Game:", data);
-
-      const localstorageItem = localStorage.getItem("newGame");
-      const result = await fetch(`${API_BASE_URL}games/${localstorageItem}`);
-      const IDdata = await result.json();
-      setIsNewGame(IDdata);
-      console.log("Second fetch:", IDdata);
     } catch (e) {
       console.error(e);
     }
+
+    const game = localStorage.getItem("newGame");
+    const firstPlayer = localStorage.getItem("firstPlayer");
+    const secondPlayer = localStorage.getItem("secondPlayer");
+
+    try {
+      const result = await fetch(
+        `${API_BASE_URL}player/join/${game}/${firstPlayer}`
+      );
+      const data = await result.json();
+      console.log("first game set:", data);
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      const result = await fetch(
+        `${API_BASE_URL}player/join/${game}/${secondPlayer}`
+      );
+      const data = await result.json();
+      setIsNewGame(data);
+      console.log("second game set:", data);
+    } catch (e) {
+      console.error(e);
+    }
+    return;
+  };
+
+  const createPlayers = async () => {
+    const res1 = await fetch(`${API_BASE_URL}player/create`);
+    const p1 = await res1.json();
+    localStorage.setItem("firstPlayer", p1.id);
+    setplayerOne(p1.name);
+    console.log("first player:", p1);
+
+    const res2 = await fetch(`${API_BASE_URL}player/create`);
+    const p2 = await res2.json();
+    localStorage.setItem("secondPlayer", p2.id);
+    setplayerTwo(p2.name);
+    console.log("second player:", p2);
     return;
   };
 
@@ -64,8 +99,20 @@ const ApiContextProvider = ({ children }) => {
   //   // fetchNewGame();
   // }, [API_BASE_URL]);
 
+  //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
+
   return (
-    <ApiContext.Provider value={{ getID, isDraw, isNewGame, fetchNewGame }}>
+    <ApiContext.Provider
+      value={{
+        getID,
+        isDraw,
+        isNewGame,
+        fetchNewGame,
+        createPlayers,
+        playerOne,
+        playerTwo,
+      }}
+    >
       {children}
     </ApiContext.Provider>
   );
