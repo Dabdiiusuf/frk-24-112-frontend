@@ -24,35 +24,50 @@ const ApiContextProvider = ({ children }) => {
       const data = await res.json();
       localStorage.setItem("newGame", data.id);
       console.log("New Game:", data);
+    } catch (e) {
+      console.error(e);
+    }
 
-      const localstorageItem = localStorage.getItem("newGame");
-      const result = await fetch(`${API_BASE_URL}games/${localstorageItem}`);
-      const IDdata = await result.json();
-      setIsNewGame(IDdata);
-      console.log("Second fetch:", IDdata);
+    const game = localStorage.getItem("newGame");
+    const firstPlayer = localStorage.getItem("firstPlayer");
+    const secondPlayer = localStorage.getItem("secondPlayer");
+
+    try {
+      const result = await fetch(
+        `${API_BASE_URL}player/join/${game}/${firstPlayer}`
+      );
+      const data = await result.json();
+      console.log("first game set:", data);
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      const result = await fetch(
+        `${API_BASE_URL}player/join/${game}/${secondPlayer}`
+      );
+      const data = await result.json();
+      setIsNewGame(data);
+      console.log("second game set:", data);
     } catch (e) {
       console.error(e);
     }
     return;
   };
 
-  useEffect(() => {
-    const fetchPlayers = async () => {
-      const res1 = await fetch(`${API_BASE_URL}player/create`);
-      const p1 = await res1.json();
-      localStorage.setItem("firstPlayer", p1.id);
-      setplayerOne(p1.name);
-      console.log("first player:", p1);
+  const createPlayers = async () => {
+    const res1 = await fetch(`${API_BASE_URL}player/create`);
+    const p1 = await res1.json();
+    localStorage.setItem("firstPlayer", p1.id);
+    setplayerOne(p1.name);
+    console.log("first player:", p1);
 
-      const res2 = await fetch(`${API_BASE_URL}player/create`);
-      const p2 = await res2.json();
-      localStorage.setItem("secondPlayer", p2.id);
-      setplayerTwo(p2.name);
-      console.log("second player:", p2);
-      return;
-    };
-    fetchPlayers();
-  }, []);
+    const res2 = await fetch(`${API_BASE_URL}player/create`);
+    const p2 = await res2.json();
+    localStorage.setItem("secondPlayer", p2.id);
+    setplayerTwo(p2.name);
+    console.log("second player:", p2);
+    return;
+  };
 
   // useEffect(() => {
   //   const fetchGamesID = async () => {
@@ -88,7 +103,15 @@ const ApiContextProvider = ({ children }) => {
 
   return (
     <ApiContext.Provider
-      value={{ getID, isDraw, isNewGame, fetchNewGame, playerOne, playerTwo }}
+      value={{
+        getID,
+        isDraw,
+        isNewGame,
+        fetchNewGame,
+        createPlayers,
+        playerOne,
+        playerTwo,
+      }}
     >
       {children}
     </ApiContext.Provider>
