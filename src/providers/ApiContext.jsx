@@ -8,15 +8,12 @@ const ApiContextProvider = ({ children }) => {
   const [getID, setGetID] = useState(null);
   const [isDraw, setIsDraw] = useState(null);
   const [isNewGame, setIsNewGame] = useState(null);
-  const [whiteWin, setWhiteWin] = useState(null);
-  const [blackWin, setBlackWin] = useState(null);
 
   const fetchNewGame = useMemo(async () => {
     try {
-      const res = await fetch(
-        `${API_BASE_URL}game/015cdc04-4d22-46f7-8d8e-f1879bb9bf1b`
-      );
+      const res = await fetch(`${API_BASE_URL}games/add`);
       const data = await res.json();
+      localStorage.setItem("newGame", data.id);
       setIsNewGame(data);
       console.log("New Game:", data);
       console.log("New game created");
@@ -50,43 +47,13 @@ const ApiContextProvider = ({ children }) => {
       }
     };
 
-    const fetchWhiteWin = async () => {
-      try {
-        const res = await fetch(
-          `${API_BASE_URL}game/6d3e9d43-9d19-4fb5-a684-b8514f0e4810`
-        );
-        const data = await res.json();
-        setWhiteWin(data);
-        console.log("White wins:", data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const fetchBlackWin = async () => {
-      try {
-        const res = await fetch(
-          `${API_BASE_URL}game/ebdf150a-4740-42ea-a5a7-dfce2f6f3725`
-        );
-        const data = await res.json();
-        setBlackWin(data);
-        console.log("Black wins:", data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
     fetchGamesID();
     fetchDrawGame();
     // fetchNewGame();
-    fetchWhiteWin();
-    fetchBlackWin();
   }, [API_BASE_URL]);
 
   return (
-    <ApiContext.Provider
-      value={{ getID, isDraw, isNewGame, whiteWin, blackWin, fetchNewGame }}
-    >
+    <ApiContext.Provider value={{ getID, isDraw, isNewGame, fetchNewGame }}>
       {children}
     </ApiContext.Provider>
   );
