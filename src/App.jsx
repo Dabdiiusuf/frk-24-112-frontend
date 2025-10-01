@@ -24,9 +24,13 @@ export default function App() {
     //will work with icon placement logic here later this is just a start..
   }, []);
 
-  if (!isNewGame?.board) return <p>Is Loading</p>;
+  // if (!isNewGame?.board) return <p>Is Loading</p>;
 
-  const { rows, cols, tiles } = isNewGame.board;
+  // const { rows, cols, tiles } = isNewGame.board;
+
+  const rows = isNewGame?.board?.rows ?? 16;
+  const cols = isNewGame?.board?.cols ?? 16;
+  const tiles = isNewGame?.board?.tiles ?? [];
 
   return (
     <div>
