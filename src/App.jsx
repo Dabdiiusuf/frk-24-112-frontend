@@ -40,7 +40,10 @@ export default function App() {
             onCellClick={handleCellClick}
           />
         </GameBoard>
-        <Instructions fetchNewGame={fetchNewGame} inputValue={inputValue} />
+        <Instructions
+          fetchNewGame={fetchNewGame}
+          inputValue={inputValue}
+        />
 
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
