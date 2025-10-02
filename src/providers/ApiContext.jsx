@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 import { ConfigContext } from "./ConfigContext";
 import { GomokuContext } from "./GomokuContext";
 
@@ -8,8 +8,8 @@ const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
 
   const [isNewGame, setIsNewGame] = useState(null);
-  const [playerOne, setplayerOne] = useState("");
-  const [playerTwo, setplayerTwo] = useState("");
+  const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
+  const [playerTwo, setplayerTwo] = useState(localStorage.getItem("sPlayer"));
   const [currentPlayer, setCurrentPlayer] = useState(1);
 
   const fetchNewGame = async () => {
@@ -50,13 +50,15 @@ const ApiContextProvider = ({ children }) => {
   const createPlayers = async () => {
     const res1 = await fetch(`${API_BASE_URL}player/create`);
     const p1 = await res1.json();
-    localStorage.setItem("firstPlayer", p1.id, p1.name);
+    localStorage.setItem("firstPlayer", p1.id);
+    localStorage.setItem("fPlayer", p1.name);
     setplayerOne(p1.name);
     console.log("first player:", p1);
 
     const res2 = await fetch(`${API_BASE_URL}player/create`);
     const p2 = await res2.json();
     localStorage.setItem("secondPlayer", p2.id);
+    localStorage.setItem("sPlayer", p2.name);
     setplayerTwo(p2.name);
     console.log("second player:", p2);
     return;
