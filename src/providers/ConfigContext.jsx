@@ -1,4 +1,4 @@
-import { createContext, useMemo } from "react";
+import { createContext } from "react";
 
 const ConfigContext = createContext(null);
 

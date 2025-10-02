@@ -19,6 +19,7 @@ export default function App() {
     playerTwo,
     createPlayers,
     playPiece,
+    currentPlayer,
   } = useContext(ApiContext);
 
   const { randomText, DrawText, handleCellClick, message } =
@@ -55,6 +56,7 @@ export default function App() {
               handleCellClick(row, col, value);
               playPiece(row, col);
             }}
+            currentPlayer={currentPlayer}
           />
         </GameBoard>
 

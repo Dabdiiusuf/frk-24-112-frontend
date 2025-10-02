@@ -73,21 +73,30 @@ const ApiContextProvider = ({ children }) => {
   const playPiece = async (col, row) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
-    // const secondPlayer = localStorage.getItem("secondPlayer");
+    const secondPlayer = localStorage.getItem("secondPlayer");
+
+    const playerId = currentPlayer === 1 ? firstPlayer : secondPlayer;
+
     const res = await fetch(
-      `${API_BASE_URL}player/play/${game}/${firstPlayer}/${col}/${row}`
+      `${API_BASE_URL}player/play/${game}/${playerId}/${col}/${row}`
     );
     if (res.status === 409) return;
-    const updatedGame = await res.json();
-    setCurrentPlayer(updatedGame.nextPlayer ?? (currentPlayer === 1 ? 2 : 1));
-    // const updatedGame = await res.json();
-    setIsNewGame(updatedGame);
 
-    console.log("col:", colValue);
-    console.log("row:", rowValue);
-    console.log("piece placed?", updatedGame);
-    console.log("It is player", `${currentPlayer}'s turn`);
+    const updatedGame = await res.json();
+    setIsNewGame(updatedGame);
+    setCurrentPlayer((prev) => {
+      if (typeof updatedGame.nextPlayer === "number") {
+        return updatedGame.nextPlayer;
+      }
+      if (typeof updatedGame.player === "number") {
+        console.log("Game Information:", updatedGame);
+        return updatedGame.player === 1 ? 2 : 1;
+      }
+
+      return prev === 1 ? 2 : 1;
+    });
   };
+  // const updatedGame = await res.json();
   // const value = await res.json();
   // setPlayerValue(value.player); // <---------------------------
   // console.log(playerValue);
@@ -97,7 +106,6 @@ const ApiContextProvider = ({ children }) => {
   // };
   // playPiece();
   //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
-
   return (
     <ApiContext.Provider
       value={{
