@@ -1,5 +1,5 @@
 import "./App.css";
-import { useContext, useCallback, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ApiContext } from "./providers/ApiContext";
 import { GomokuContext } from "./providers/GomokuContext";
 import {
@@ -12,8 +12,14 @@ import {
 } from "frk-24-112-components";
 
 export default function App() {
-  const { isNewGame, fetchNewGame, playerOne, playerTwo, createPlayers } =
-    useContext(ApiContext);
+  const {
+    isNewGame,
+    fetchNewGame,
+    playerOne,
+    playerTwo,
+    createPlayers,
+    playPiece,
+  } = useContext(ApiContext);
 
   const { randomText, DrawText, handleCellClick, message } =
     useContext(GomokuContext);
@@ -45,7 +51,10 @@ export default function App() {
             tiles={tiles}
             size={57}
             message={message}
-            onCellClick={handleCellClick}
+            onCellClick={(row, col, value) => {
+              handleCellClick(row, col, value);
+              playPiece(row, col);
+            }}
           />
         </GameBoard>
 

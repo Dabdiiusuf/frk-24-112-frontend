@@ -70,26 +70,31 @@ const ApiContextProvider = ({ children }) => {
     return;
   };
 
-  const playPiece = async () => {
+  const playPiece = async (row, col) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
     // const secondPlayer = localStorage.getItem("secondPlayer");
     const res = await fetch(
-      `${API_BASE_URL}player/play/${game}/${firstPlayer}/${colValue}/${rowValue}`
+      `${API_BASE_URL}player/play/${game}/${firstPlayer}/${col}/${row}`
     );
-    if (res.status === 409) {
-      console.log("error");
-      return;
-    }
+    if (res.status === 409) return;
+    console.log("error");
+
     const value = await res.json();
-    // setPlayerValue(value.player);
+    setPlayerValue(value.player); // <---------------------------
     console.log(playerValue);
-    console.log("col:", colValue);
-    console.log("row:", rowValue);
+    console.log("col:", col);
+    console.log("row:", row);
     console.log("piece placed?", value);
   };
-  playPiece();
-
+  // const value = await res.json();
+  // setPlayerValue(value.player); // <---------------------------
+  // console.log(playerValue);
+  // console.log("col:", colValue);
+  // console.log("row:", rowValue);
+  // console.log("piece placed?", value);
+  // };
+  // playPiece();
   //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
 
   return (
