@@ -70,7 +70,7 @@ const ApiContextProvider = ({ children }) => {
     return;
   };
 
-  const playPiece = async (row, col) => {
+  const playPiece = async (col, row) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
     // const secondPlayer = localStorage.getItem("secondPlayer");
