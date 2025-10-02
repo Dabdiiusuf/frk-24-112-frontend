@@ -73,11 +73,7 @@ export default function App() {
         )}
         {isGameOver === 256 ? <GameOver GameOverText={DrawText} /> : ""}
         <GCP playerOne={playerOne} playerTwo={playerTwo} />
-        {/* {isDraw === "tie" ? (
-          
-        ) : (
-          <GameOver GameOverText={randomText} />
-        )} */}
+        {/*  <GameOver GameOverText={randomText} /> */}
       </Background>
     </div>
   );
