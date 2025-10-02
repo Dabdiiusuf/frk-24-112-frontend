@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState } from "react";
 import { ConfigContext } from "./ConfigContext";
 import { GomokuContext } from "./GomokuContext";
 
@@ -11,7 +11,8 @@ const ApiContextProvider = ({ children }) => {
   const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
   const [playerTwo, setplayerTwo] = useState(localStorage.getItem("sPlayer"));
   const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [isGameOver, setisGameOver] = useState(0);
+  const [isGameDraw, setIsGameDraw] = useState(0);
+  // const [isGameWon, setisGameWon] = useState(null);
 
   const fetchNewGame = async () => {
     try {
@@ -81,8 +82,7 @@ const ApiContextProvider = ({ children }) => {
 
     const updatedGame = await res.json();
     setIsNewGame(updatedGame);
-    setisGameOver(updatedGame.round);
-    console.log(updatedGame.round);
+    setIsGameDraw(updatedGame.round);
     setCurrentPlayer((prev) => {
       if (typeof updatedGame.nextPlayer === "number") {
         return updatedGame.nextPlayer;
@@ -112,7 +112,8 @@ const ApiContextProvider = ({ children }) => {
         fetchNewGame,
         createPlayers,
         setCurrentPlayer,
-        isGameOver,
+        isGameDraw,
+        // isGameWon,
         isNewGame,
         playerOne,
         playerTwo,
