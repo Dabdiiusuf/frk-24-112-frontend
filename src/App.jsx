@@ -1,5 +1,5 @@
 import "./App.css";
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useState, useEffect } from "react";
 import { ApiContext } from "./providers/ApiContext";
 import { GomokuContext } from "./providers/GomokuContext";
 import {
@@ -16,6 +16,7 @@ export default function App() {
     useContext(ApiContext);
 
   const { randomText, DrawText } = useContext(GomokuContext);
+  const [showModal, setShowModal] = useState(false);
 
   const handleCellClick = useCallback((row, col, value) => {
     console.log("Clicked:", { row, col, value });
@@ -30,6 +31,14 @@ export default function App() {
   const cols = isNewGame?.board?.cols ?? 16;
   const tiles = isNewGame?.board?.tiles ?? [];
 
+  useEffect(() => {
+    const hasSeen = localStorage.getItem("modalShown");
+    if (!hasSeen) {
+      setShowModal(true);
+      localStorage.setItem("modalShown", "true");
+    }
+  }, []);
+
   return (
     <div>
       <Background>
@@ -43,7 +52,7 @@ export default function App() {
           />
         </GameBoard>
 
-        {!isNewGame ? (
+        {!isNewGame && showModal ? (
           <Instructions
             fetchNewGame={fetchNewGame}
             playerOne={playerOne}
