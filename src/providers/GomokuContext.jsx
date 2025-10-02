@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 
 const GomokuContext = createContext(null);
 
@@ -6,6 +6,8 @@ const GomokuContextProvider = ({ children }) => {
   const [playerOne, setPlayerOne] = useState("");
   const [playerTwo, setPlayerTwo] = useState("");
   const [randomText, setRandomText] = useState("");
+  const [colValue, setColValue] = useState(null);
+  const [rowValue, setRowValue] = useState(null);
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
 
@@ -22,6 +24,12 @@ const GomokuContextProvider = ({ children }) => {
     setRandomText(RandomTextArray[textIndex]);
   }, []);
 
+  const handleCellClick = useCallback((row, col, value) => {
+    console.log("Clicked:", { row, col, value });
+    setColValue(col);
+    setRowValue(row);
+  }, []);
+
   return (
     <GomokuContext.Provider
       value={{
@@ -29,9 +37,12 @@ const GomokuContextProvider = ({ children }) => {
         playerTwo,
         randomText,
         DrawText,
+        colValue,
+        rowValue,
         setPlayerOne,
         setPlayerTwo,
         setRandomText,
+        handleCellClick,
       }}
     >
       {children}

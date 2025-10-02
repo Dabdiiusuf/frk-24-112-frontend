@@ -7,11 +7,13 @@ import {
   useCallback,
 } from "react";
 import { ConfigContext } from "./ConfigContext";
+import { GomokuContext } from "./GomokuContext";
 
 const ApiContext = createContext(null);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
+  const { rowValue, colValue } = useContext(GomokuContext);
   const [isNewGame, setIsNewGame] = useState(null);
   const [playerOne, setplayerOne] = useState("");
   const [playerTwo, setplayerTwo] = useState("");
