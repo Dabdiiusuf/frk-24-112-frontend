@@ -70,7 +70,10 @@ export default function App() {
         ) : (
           ""
         )}
-        <GCP />
+        <GCP
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+        />
         {/* {isDraw === "tie" ? (
           <GameOver GameOverText={DrawText} />
         ) : (

@@ -3,6 +3,7 @@ import { ConfigContext } from "./ConfigContext";
 import { GomokuContext } from "./GomokuContext";
 
 const ApiContext = createContext(null);
+export const useApi = () => useContext(ApiContext);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
@@ -25,7 +26,6 @@ const ApiContextProvider = ({ children }) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
     const secondPlayer = localStorage.getItem("secondPlayer");
-
     try {
       const result = await fetch(
         `${API_BASE_URL}player/join/${game}/${firstPlayer}`
@@ -51,7 +51,7 @@ const ApiContextProvider = ({ children }) => {
   const createPlayers = async () => {
     const res1 = await fetch(`${API_BASE_URL}player/create`);
     const p1 = await res1.json();
-    localStorage.setItem("firstPlayer", p1.id);
+    localStorage.setItem("firstPlayer", p1.id, p1.name);
     setplayerOne(p1.name);
     console.log("first player:", p1);
 
@@ -67,6 +67,8 @@ const ApiContextProvider = ({ children }) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
     const secondPlayer = localStorage.getItem("secondPlayer");
+
+    console.log("this is player1 UUID ", firstPlayer);
 
     const playerId = currentPlayer === 1 ? firstPlayer : secondPlayer;
 
