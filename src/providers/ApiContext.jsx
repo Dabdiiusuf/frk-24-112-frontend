@@ -17,7 +17,7 @@ const ApiContextProvider = ({ children }) => {
   const [isNewGame, setIsNewGame] = useState(null);
   const [playerOne, setplayerOne] = useState("");
   const [playerTwo, setplayerTwo] = useState("");
-  const [playerValue, setPlayerValue] = useState(null);
+  const [currentPlayer, setCurrentPlayer] = useState(1);
 
   const fetchNewGame = async () => {
     try {
@@ -78,14 +78,15 @@ const ApiContextProvider = ({ children }) => {
       `${API_BASE_URL}player/play/${game}/${firstPlayer}/${col}/${row}`
     );
     if (res.status === 409) return;
-    console.log("error");
+    const updatedGame = await res.json();
+    setCurrentPlayer(updatedGame.nextPlayer ?? (currentPlayer === 1 ? 2 : 1));
+    // const updatedGame = await res.json();
+    setIsNewGame(updatedGame);
 
-    const value = await res.json();
-    setPlayerValue(value.player); // <---------------------------
-    console.log(playerValue);
-    console.log("col:", col);
-    console.log("row:", row);
-    console.log("piece placed?", value);
+    console.log("col:", colValue);
+    console.log("row:", rowValue);
+    console.log("piece placed?", updatedGame);
+    console.log("It is player", `${currentPlayer}'s turn`);
   };
   // const value = await res.json();
   // setPlayerValue(value.player); // <---------------------------
@@ -103,9 +104,11 @@ const ApiContextProvider = ({ children }) => {
         playPiece,
         fetchNewGame,
         createPlayers,
+        setCurrentPlayer,
         isNewGame,
         playerOne,
         playerTwo,
+        currentPlayer,
       }}
     >
       {children}
