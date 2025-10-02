@@ -11,6 +11,7 @@ const ApiContextProvider = ({ children }) => {
   const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
   const [playerTwo, setplayerTwo] = useState(localStorage.getItem("sPlayer"));
   const [currentPlayer, setCurrentPlayer] = useState(1);
+  const [isGameOver, setisGameOver] = useState(0);
 
   const fetchNewGame = async () => {
     try {
@@ -80,6 +81,8 @@ const ApiContextProvider = ({ children }) => {
 
     const updatedGame = await res.json();
     setIsNewGame(updatedGame);
+    setisGameOver(updatedGame.round);
+    console.log(updatedGame.round);
     setCurrentPlayer((prev) => {
       if (typeof updatedGame.nextPlayer === "number") {
         return updatedGame.nextPlayer;
@@ -109,6 +112,7 @@ const ApiContextProvider = ({ children }) => {
         fetchNewGame,
         createPlayers,
         setCurrentPlayer,
+        isGameOver,
         isNewGame,
         playerOne,
         playerTwo,

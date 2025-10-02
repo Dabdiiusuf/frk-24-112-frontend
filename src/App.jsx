@@ -14,6 +14,7 @@ import {
 export default function App() {
   const {
     isNewGame,
+    isGameOver,
     fetchNewGame,
     playerOne,
     playerTwo,
@@ -70,12 +71,10 @@ export default function App() {
         ) : (
           ""
         )}
-        <GCP
-          playerOne={playerOne}
-          playerTwo={playerTwo}
-        />
+        {isGameOver === 256 ? <GameOver GameOverText={DrawText} /> : ""}
+        <GCP playerOne={playerOne} playerTwo={playerTwo} />
         {/* {isDraw === "tie" ? (
-          <GameOver GameOverText={DrawText} />
+          
         ) : (
           <GameOver GameOverText={randomText} />
         )} */}
