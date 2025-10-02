@@ -17,9 +17,7 @@ const ApiContextProvider = ({ children }) => {
   const [isNewGame, setIsNewGame] = useState(null);
   const [playerOne, setplayerOne] = useState("");
   const [playerTwo, setplayerTwo] = useState("");
-  const game = localStorage.getItem("newGame");
-  const firstPlayer = localStorage.getItem("firstPlayer");
-  const secondPlayer = localStorage.getItem("secondPlayer");
+  const [playerValue, setPlayerValue] = useState(null);
 
   const fetchNewGame = async () => {
     try {
@@ -30,6 +28,10 @@ const ApiContextProvider = ({ children }) => {
     } catch (e) {
       console.error(e);
     }
+
+    const game = localStorage.getItem("newGame");
+    const firstPlayer = localStorage.getItem("firstPlayer");
+    const secondPlayer = localStorage.getItem("secondPlayer");
 
     try {
       const result = await fetch(
@@ -68,22 +70,32 @@ const ApiContextProvider = ({ children }) => {
     return;
   };
 
-  // const playPiece = async () => {
-  //   const res = await fetch(
-  //     `${API_BASE_URL}player/play/${game}/${firstPlayer}/${colValue}/${rowValue}`
-  //   );
-  //   const value = await res.json();
-  //   if (res.status === 409) {
-  //     return;
-  //   }
-  // };
+  const playPiece = async () => {
+    const game = localStorage.getItem("newGame");
+    const firstPlayer = localStorage.getItem("firstPlayer");
+    // const secondPlayer = localStorage.getItem("secondPlayer");
+    const res = await fetch(
+      `${API_BASE_URL}player/play/${game}/${firstPlayer}/${colValue}/${rowValue}`
+    );
+    if (res.status === 409) {
+      console.log("error");
+      return;
+    }
+    const value = await res.json();
+    // setPlayerValue(value.player);
+    console.log(playerValue);
+    console.log("col:", colValue);
+    console.log("row:", rowValue);
+    console.log("piece placed?", value);
+  };
+  playPiece();
 
   //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
 
   return (
     <ApiContext.Provider
       value={{
-        // playPiece,
+        playPiece,
         fetchNewGame,
         createPlayers,
         isNewGame,

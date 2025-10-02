@@ -30,8 +30,6 @@ const GomokuContextProvider = ({ children }) => {
     console.log("Clicked:", { row, col, value });
     setColValue(col);
     setRowValue(row);
-    message;
-    return;
   }, []);
 
   return (
