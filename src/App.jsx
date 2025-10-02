@@ -15,7 +15,8 @@ export default function App() {
   const { isNewGame, fetchNewGame, playerOne, playerTwo, createPlayers } =
     useContext(ApiContext);
 
-  const { randomText, DrawText, handleCellClick } = useContext(GomokuContext);
+  const { randomText, DrawText, handleCellClick, message } =
+    useContext(GomokuContext);
   const [showModal, setShowModal] = useState(false);
 
   // if (!isNewGame?.board) return <p>Is Loading</p>;
@@ -43,6 +44,7 @@ export default function App() {
             cols={cols}
             tiles={tiles}
             size={57}
+            message={message}
             onCellClick={handleCellClick}
           />
         </GameBoard>

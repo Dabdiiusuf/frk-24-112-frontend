@@ -7,10 +7,10 @@ import { GomokuContextProvider } from "./providers/GomokuContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <ConfigContextProvider>
-    <ApiContextProvider>
-      <GomokuContextProvider>
+    <GomokuContextProvider>
+      <ApiContextProvider>
         <App />
-      </GomokuContextProvider>
-    </ApiContextProvider>
+      </ApiContextProvider>
+    </GomokuContextProvider>
   </ConfigContextProvider>
 );

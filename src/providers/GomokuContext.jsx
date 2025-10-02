@@ -11,6 +11,8 @@ const GomokuContextProvider = ({ children }) => {
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
 
+  const message = "placed";
+
   useEffect(() => {
     const RandomTextArray = [
       "Yo-ho-ho! The match be over, and  claims the treasure o’ triumph! The rest be feedin’ the fishes!",
@@ -28,6 +30,8 @@ const GomokuContextProvider = ({ children }) => {
     console.log("Clicked:", { row, col, value });
     setColValue(col);
     setRowValue(row);
+    message;
+    return;
   }, []);
 
   return (
@@ -39,6 +43,7 @@ const GomokuContextProvider = ({ children }) => {
         DrawText,
         colValue,
         rowValue,
+        message,
         setPlayerOne,
         setPlayerTwo,
         setRandomText,
