@@ -3,7 +3,6 @@ import { ConfigContext } from "./ConfigContext";
 import { GomokuContext } from "./GomokuContext";
 
 const ApiContext = createContext(null);
-export const useApi = () => useContext(ApiContext);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
