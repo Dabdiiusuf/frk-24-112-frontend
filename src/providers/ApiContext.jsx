@@ -15,6 +15,8 @@ const ApiContextProvider = ({ children }) => {
   const [isGameDraw, setIsGameDraw] = useState(0);
   const [gameWon, setGameWon] = useState(null);
   const [error, setError] = useState("");
+  const [firstPoints, setFirstPoints] = useState(0);
+  const [secondPoints, setSecondPoints] = useState(0);
 
   const fetchNewGame = async () => {
     try {
@@ -97,6 +99,13 @@ const ApiContextProvider = ({ children }) => {
     if (updatedGame.state === "won") {
       setGameWon(updatedGame.winner.name);
     }
+    if (updatedGame.winnerNumber === 1) {
+      setFirstPoints((count) => count + 1);
+      console.log(firstPoints);
+    } else if (updatedGame.winnerNumber === 2) {
+      setSecondPoints((count) => count + 1);
+      console.log(secondPoints);
+    }
     setCurrentPlayer((prev) => {
       if (typeof updatedGame.nextPlayer === "number") {
         return updatedGame.nextPlayer;
@@ -144,6 +153,8 @@ const ApiContextProvider = ({ children }) => {
         currentPlayer,
         showGameOver,
         error,
+        firstPoints,
+        secondPoints,
       }}
     >
       {children}

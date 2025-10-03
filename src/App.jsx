@@ -25,6 +25,8 @@ export default function App() {
     playAgainReset,
     showGameOver,
     error,
+    firstPoints,
+    secondPoints,
   } = useContext(ApiContext);
 
   const { randomText, DrawText, handleCellClick, message } =
@@ -82,7 +84,12 @@ export default function App() {
         ) : (
           ""
         )}
-        <GCP playerOne={playerOne} playerTwo={playerTwo} />
+        <GCP
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+          firstPoints={firstPoints}
+          secondPoints={secondPoints}
+        />
       </Background>
     </div>
   );
