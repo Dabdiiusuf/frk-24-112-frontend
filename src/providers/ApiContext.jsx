@@ -12,7 +12,7 @@ const ApiContextProvider = ({ children }) => {
   const [playerTwo, setplayerTwo] = useState(localStorage.getItem("sPlayer"));
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [isGameDraw, setIsGameDraw] = useState(0);
-  // const [isGameWon, setisGameWon] = useState(null);
+  const [gameWon, setGameWon] = useState(null);
 
   const fetchNewGame = async () => {
     try {
@@ -78,19 +78,25 @@ const ApiContextProvider = ({ children }) => {
     const res = await fetch(
       `${API_BASE_URL}player/play/${game}/${playerId}/${col}/${row}`
     );
-    if (res.status === 409) return;
+    if (res.status === 409) {
+      console.log("error", res.status);
+      return;
+    }
 
     const updatedGame = await res.json();
     setIsNewGame(updatedGame);
     setIsGameDraw(updatedGame.round);
+    if (updatedGame.state === "won") {
+      setGameWon(updatedGame.winner.name);
+    }
     setCurrentPlayer((prev) => {
       if (typeof updatedGame.nextPlayer === "number") {
         return updatedGame.nextPlayer;
       }
       if (typeof updatedGame.player === "number") {
-        console.log("Game Information:", updatedGame);
         return updatedGame.player === 1 ? 2 : 1;
       }
+      console.log("Game Information:", updatedGame);
 
       return prev === 1 ? 2 : 1;
     });
@@ -113,7 +119,7 @@ const ApiContextProvider = ({ children }) => {
         createPlayers,
         setCurrentPlayer,
         isGameDraw,
-        // isGameWon,
+        gameWon,
         isNewGame,
         playerOne,
         playerTwo,

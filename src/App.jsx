@@ -15,7 +15,7 @@ export default function App() {
   const {
     isNewGame,
     isGameDraw,
-    // isGameWon,
+    gameWon,
     fetchNewGame,
     playerOne,
     playerTwo,
@@ -73,8 +73,11 @@ export default function App() {
           ""
         )}
         {isGameDraw === 256 ? <GameOver GameOverText={DrawText} /> : ""}
-        {/* {isGameWon ? <GameOver GameOverText={randomText} /> : ""} */}
-        <GCP playerOne={playerOne} playerTwo={playerTwo} />
+        {gameWon ? <GameOver GameOverText={randomText} /> : ""}
+        <GCP
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+        />
       </Background>
     </div>
   );
