@@ -29,9 +29,16 @@ export default function App() {
     secondPoints,
   } = useContext(ApiContext);
 
-  const { randomText, DrawText, handleCellClick, message } =
-    useContext(GomokuContext);
-  const [showModal, setShowModal] = useState(false);
+  const {
+    randomText,
+    DrawText,
+    handleCellClick,
+    message,
+    openInstructions,
+    showInstructions,
+    showModal,
+    closeInstructions,
+  } = useContext(GomokuContext);
 
   // if (!isNewGame?.board) return <p>Is Loading</p>;
 
@@ -41,17 +48,9 @@ export default function App() {
   const cols = isNewGame?.board?.cols ?? 16;
   const tiles = isNewGame?.board?.tiles ?? [];
 
-  useEffect(() => {
-    const hasSeen = localStorage.getItem("modalShown");
-    if (!hasSeen) {
-      setShowModal(true);
-      localStorage.setItem("modalShown", "true");
-    }
-  }, []);
-
   return (
     <div>
-      <Background>
+      <Background openInstructions={openInstructions}>
         <GameBoard>
           <Board
             rows={rows}
@@ -66,6 +65,16 @@ export default function App() {
             currentPlayer={currentPlayer}
           />
         </GameBoard>
+
+        {showInstructions ? (
+          <Instructions
+            closeInstructions={closeInstructions}
+            playerOne={playerOne}
+            playerTwo={playerTwo}
+          />
+        ) : (
+          ""
+        )}
 
         {!isNewGame && showModal ? (
           <Instructions

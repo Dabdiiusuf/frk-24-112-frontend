@@ -8,6 +8,8 @@ const GomokuContextProvider = ({ children }) => {
   const [randomText, setRandomText] = useState("");
   const [colValue, setColValue] = useState(null);
   const [rowValue, setRowValue] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
 
@@ -32,6 +34,23 @@ const GomokuContextProvider = ({ children }) => {
     setRowValue(row);
   }, []);
 
+  const openInstructions = () => {
+    setShowInstructions(true);
+    // localStorage.removeItem("modalShown");
+    // setShowModal(false);
+  };
+  const closeInstructions = () => {
+    setShowInstructions(false);
+  };
+
+  useEffect(() => {
+    const hasSeen = localStorage.getItem("modalShown");
+    if (!hasSeen) {
+      setShowModal(true);
+      localStorage.setItem("modalShown", "true");
+    }
+  }, []);
+
   return (
     <GomokuContext.Provider
       value={{
@@ -42,10 +61,15 @@ const GomokuContextProvider = ({ children }) => {
         colValue,
         rowValue,
         message,
+        showInstructions,
+        showModal,
         setPlayerOne,
         setPlayerTwo,
         setRandomText,
         handleCellClick,
+        openInstructions,
+        closeInstructions,
+        setShowModal,
       }}
     >
       {children}
