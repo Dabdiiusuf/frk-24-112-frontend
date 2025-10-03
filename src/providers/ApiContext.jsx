@@ -8,11 +8,13 @@ const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
 
   const [isNewGame, setIsNewGame] = useState(null);
+  const [showGameOver, setShowGameOver] = useState(false);
   const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
   const [playerTwo, setplayerTwo] = useState(localStorage.getItem("sPlayer"));
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [isGameDraw, setIsGameDraw] = useState(0);
   const [gameWon, setGameWon] = useState(null);
+  const [error, setError] = useState("");
 
   const fetchNewGame = async () => {
     try {
@@ -27,6 +29,10 @@ const ApiContextProvider = ({ children }) => {
     const game = localStorage.getItem("newGame");
     const firstPlayer = localStorage.getItem("firstPlayer");
     const secondPlayer = localStorage.getItem("secondPlayer");
+    if (!secondPlayer || !firstPlayer) {
+      setError("Please generate a name");
+      return;
+    }
     try {
       const result = await fetch(
         `${API_BASE_URL}player/join/${game}/${firstPlayer}`
@@ -63,6 +69,8 @@ const ApiContextProvider = ({ children }) => {
     localStorage.setItem("sPlayer", p2.name);
     setplayerTwo(p2.name);
     console.log("second player:", p2);
+
+    setError("");
     return;
   };
 
@@ -101,6 +109,15 @@ const ApiContextProvider = ({ children }) => {
       return prev === 1 ? 2 : 1;
     });
   };
+
+  const playAgainReset = () => {
+    console.log("Play again!");
+    localStorage.removeItem("newGame");
+    fetchNewGame();
+    createPlayers();
+    playPiece();
+    setShowGameOver(true);
+  };
   // const updatedGame = await res.json();
   // const value = await res.json();
   // setPlayerValue(value.player); // <---------------------------
@@ -118,12 +135,15 @@ const ApiContextProvider = ({ children }) => {
         fetchNewGame,
         createPlayers,
         setCurrentPlayer,
+        playAgainReset,
         isGameDraw,
         gameWon,
         isNewGame,
         playerOne,
         playerTwo,
         currentPlayer,
+        showGameOver,
+        error,
       }}
     >
       {children}

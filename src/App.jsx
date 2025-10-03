@@ -22,6 +22,9 @@ export default function App() {
     createPlayers,
     playPiece,
     currentPlayer,
+    playAgainReset,
+    showGameOver,
+    error,
   } = useContext(ApiContext);
 
   const { randomText, DrawText, handleCellClick, message } =
@@ -68,16 +71,18 @@ export default function App() {
             playerOne={playerOne}
             playerTwo={playerTwo}
             createPlayers={createPlayers}
+            error={error}
           />
         ) : (
           ""
         )}
         {isGameDraw === 256 ? <GameOver GameOverText={DrawText} /> : ""}
-        {gameWon ? <GameOver GameOverText={randomText} /> : ""}
-        <GCP
-          playerOne={playerOne}
-          playerTwo={playerTwo}
-        />
+        {gameWon && !showGameOver ? (
+          <GameOver GameOverText={randomText} playAgainReset={playAgainReset} />
+        ) : (
+          ""
+        )}
+        <GCP playerOne={playerOne} playerTwo={playerTwo} />
       </Background>
     </div>
   );
