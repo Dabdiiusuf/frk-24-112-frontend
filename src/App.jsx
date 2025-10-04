@@ -22,8 +22,9 @@ export default function App() {
     createPlayers,
     playPiece,
     currentPlayer,
-    playAgainReset,
+    playAgain,
     showGameOver,
+    setShowGameOver,
     error,
     firstPoints,
     secondPoints,
@@ -88,8 +89,13 @@ export default function App() {
           ""
         )}
         {isGameDraw === 256 ? <GameOver GameOverText={DrawText} /> : ""}
-        {gameWon && !showGameOver ? (
-          <GameOver GameOverText={randomText} playAgainReset={playAgainReset} />
+        {gameWon && showGameOver ? (
+          <GameOver
+            GameOverText={randomText}
+            playerOne={playerOne}
+            playerTwo={playerTwo}
+            playAgain={playAgain}
+          />
         ) : (
           ""
         )}

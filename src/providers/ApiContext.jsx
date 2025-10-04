@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { ConfigContext } from "./ConfigContext";
 import { GomokuContext } from "./GomokuContext";
 
@@ -98,6 +98,7 @@ const ApiContextProvider = ({ children }) => {
     setIsGameDraw(updatedGame.round);
     if (updatedGame.state === "won") {
       setGameWon(updatedGame.winner.name);
+      setShowGameOver(true);
     }
     if (updatedGame.winnerNumber === 1) {
       setFirstPoints((count) => count + 1);
@@ -119,14 +120,26 @@ const ApiContextProvider = ({ children }) => {
     });
   };
 
-  const playAgainReset = () => {
-    console.log("Play again!");
-    localStorage.removeItem("newGame");
-    fetchNewGame();
-    createPlayers();
-    playPiece();
-    setShowGameOver(true);
+  useEffect(() => {
+    const ended = Boolean(gameWon) || isNewGame?.state === "won";
+    if (ended) setShowGameOver(true);
+  }, [gameWon, isNewGame]);
+
+  const playAgain = async () => {
+    try {
+      localStorage.removeItem("newGame");
+      setIsNewGame(null);
+      setGameWon(null);
+      setIsGameDraw(0);
+      setCurrentPlayer(1);
+
+      await fetchNewGame();
+      setShowGameOver(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
+
   // const updatedGame = await res.json();
   // const value = await res.json();
   // setPlayerValue(value.player); // <---------------------------
@@ -144,7 +157,8 @@ const ApiContextProvider = ({ children }) => {
         fetchNewGame,
         createPlayers,
         setCurrentPlayer,
-        playAgainReset,
+        setShowGameOver,
+        playAgain,
         isGameDraw,
         gameWon,
         isNewGame,
