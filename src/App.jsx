@@ -106,6 +106,7 @@ export default function App() {
           playerTwo={playerTwo}
           firstPoints={firstPoints}
           secondPoints={secondPoints}
+          currentPlayer={currentPlayer}
         />
       </Background>
     </div>
