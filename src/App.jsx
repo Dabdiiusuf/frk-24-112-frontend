@@ -28,6 +28,7 @@ export default function App() {
     error,
     firstPoints,
     secondPoints,
+    firstIcon,
   } = useContext(ApiContext);
 
   const {
@@ -95,6 +96,7 @@ export default function App() {
             playerOne={playerOne}
             playerTwo={playerTwo}
             playAgain={playAgain}
+            firstIcon={firstIcon}
           />
         ) : (
           ""
