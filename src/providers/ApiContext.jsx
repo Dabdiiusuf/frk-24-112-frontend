@@ -120,11 +120,6 @@ const ApiContextProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    const ended = Boolean(gameWon) || isNewGame?.state === "won";
-    if (ended) setShowGameOver(true);
-  }, [gameWon, isNewGame]);
-
   const playAgain = async () => {
     try {
       localStorage.removeItem("newGame");
