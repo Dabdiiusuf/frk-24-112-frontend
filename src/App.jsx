@@ -60,9 +60,9 @@ export default function App() {
             tiles={tiles}
             size={57}
             message={message}
-            onCellClick={(row, col, value) => {
-              handleCellClick(row, col, value);
-              playPiece(row, col);
+            onCellClick={(col, row, value) => {
+              handleCellClick(col, row, value);
+              playPiece(col + 1, row + 1);
             }}
             currentPlayer={currentPlayer}
           />
