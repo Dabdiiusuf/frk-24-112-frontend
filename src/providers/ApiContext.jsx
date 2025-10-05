@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { ConfigContext } from "./ConfigContext";
-import { GomokuContext } from "./GomokuContext";
+import { GomokuContextProvider } from "./GomokuContext";
 
 const ApiContext = createContext(null);
 
@@ -98,6 +98,7 @@ const ApiContextProvider = ({ children }) => {
     setIsNewGame(updatedGame);
     setIsGameDraw(updatedGame.round);
     if (updatedGame.state === "won") {
+      localStorage.setItem("winner", updatedGame.winner.name);
       setGameWon(updatedGame.winner.name);
       setShowGameOver(true);
     }
@@ -168,7 +169,9 @@ const ApiContextProvider = ({ children }) => {
         firstIcon,
       }}
     >
-      {children}
+      <GomokuContextProvider gameWon={gameWon}>
+        {children}
+      </GomokuContextProvider>
     </ApiContext.Provider>
   );
 };
