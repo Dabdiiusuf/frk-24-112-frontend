@@ -29,6 +29,7 @@ export default function App() {
     firstPoints,
     secondPoints,
     firstIcon,
+    resetGame
   } = useContext(ApiContext);
 
   const {
@@ -97,6 +98,7 @@ export default function App() {
             playerTwo={playerTwo}
             playAgain={playAgain}
             firstIcon={firstIcon}
+            resetGame={resetGame}
           />
         ) : (
           ""
@@ -107,6 +109,7 @@ export default function App() {
           firstPoints={firstPoints}
           secondPoints={secondPoints}
           currentPlayer={currentPlayer}
+          resetGame={resetGame}
         />
       </Background>
     </div>

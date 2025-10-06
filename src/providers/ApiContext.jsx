@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { ConfigContext } from "./ConfigContext";
-import { GomokuContextProvider } from "./GomokuContext";
+import { GomokuContextProvider, GomokuContext } from "./GomokuContext";
 
 const ApiContext = createContext(null);
 
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
 
+  const { setShowInstructions } = useContext(GomokuContext);
   const [isNewGame, setIsNewGame] = useState(null);
   const [showGameOver, setShowGameOver] = useState(false);
   const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
@@ -137,20 +138,28 @@ const ApiContextProvider = ({ children }) => {
     }
   };
 
-  // const updatedGame = await res.json();
-  // const value = await res.json();
-  // setPlayerValue(value.player); // <---------------------------
-  // console.log(playerValue);
-  // console.log("col:", colValue);
-  // console.log("row:", rowValue);
-  // console.log("piece placed?", value);
-  // };
-  // playPiece();
-  //d29b46e5-bfb9-4d66-b6a2-fabf2716bfea (hugethreesome)
+  const resetGame = () => {
+    localStorage.clear();
+
+    setIsNewGame(null);
+    setGameWon(null);
+    setIsGameDraw(0);
+    setCurrentPlayer(1);
+    setFirstIcon(false);
+    setShowGameOver(false);
+    setFirstPoints(0);
+    setSecondPoints(0);
+    setplayerTwo(localStorage.getItem("sPlayer"));
+    setplayerOne(localStorage.getItem("fPlayer"));
+
+    setShowInstructions(true);
+  }
+
   return (
     <ApiContext.Provider
       value={{
         playPiece,
+        resetGame,
         fetchNewGame,
         createPlayers,
         setCurrentPlayer,

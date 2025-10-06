@@ -80,6 +80,7 @@ const GomokuContextProvider = ({ children, gameWon }) => {
         openInstructions,
         closeInstructions,
         setShowModal,
+        setShowInstructions
       }}
     >
       {children}
