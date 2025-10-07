@@ -44,8 +44,19 @@ export default function App() {
     warning,
     startTimer,
     timeLeft,
+    setTimeleft,
     running,
   } = useContext(GomokuContext);
+
+  const handlePlayAgain = () => {
+    setTimeleft(5);
+    playAgain();
+  };
+
+  const handleResetAgain = () => {
+    setTimeleft(5);
+    resetGame();
+  };
 
   const rows = isNewGame?.board?.rows ?? 16;
   const cols = isNewGame?.board?.cols ?? 16;
@@ -95,8 +106,8 @@ export default function App() {
         {isGameDraw === 256 || timeLeft === 0 ? (
           <GameOver
             GameOverText={DrawText}
-            playAgain={playAgain}
-            resetGame={resetGame}
+            handlePlayAgain={handlePlayAgain}
+            handleResetAgain={handleResetAgain}
           />
         ) : (
           ""
@@ -107,9 +118,9 @@ export default function App() {
             GameOverText={randomText}
             playerOne={playerOne}
             playerTwo={playerTwo}
-            playAgain={playAgain}
+            handlePlayAgain={handlePlayAgain}
             firstIcon={firstIcon}
-            resetGame={resetGame}
+            handleResetAgain={handleResetAgain}
           />
         ) : (
           ""
@@ -121,7 +132,7 @@ export default function App() {
           firstPoints={firstPoints}
           secondPoints={secondPoints}
           currentPlayer={currentPlayer}
-          resetGame={resetGame}
+          handleResetAgain={handleResetAgain}
           resetWarning={resetWarning}
           warning={warning}
           startTimer={startTimer}

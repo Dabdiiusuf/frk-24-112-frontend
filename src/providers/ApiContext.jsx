@@ -130,7 +130,7 @@ const ApiContextProvider = ({ children }) => {
       setIsGameDraw(0);
       setCurrentPlayer(1);
       setFirstIcon(false);
-      setTimeleft(5);
+      // setTimeleft(5);
 
       await fetchNewGame();
       setShowGameOver(false);
@@ -180,7 +180,10 @@ const ApiContextProvider = ({ children }) => {
         firstIcon,
       }}
     >
-      <GomokuContextProvider gameWon={gameWon}>
+      <GomokuContextProvider
+        gameWon={gameWon}
+        setShowGameOver={setShowGameOver}
+      >
         {children}
       </GomokuContextProvider>
     </ApiContext.Provider>

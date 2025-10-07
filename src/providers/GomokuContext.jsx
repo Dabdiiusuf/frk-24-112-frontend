@@ -9,7 +9,7 @@ import { ApiContext } from "./ApiContext";
 
 const GomokuContext = createContext(null);
 
-const GomokuContextProvider = ({ children, gameWon }) => {
+const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
   const api = useContext(ApiContext);
   const winnerName =
     gameWon ?? api?.gameWon ?? localStorage.getItem("winner") ?? "";
@@ -79,6 +79,7 @@ const GomokuContextProvider = ({ children, gameWon }) => {
         if (t <= 1) {
           clearInterval(id);
           setRunning(false);
+          setShowGameOver(true);
           return 0;
         }
         console.log(showModal);
