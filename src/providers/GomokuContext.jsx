@@ -22,7 +22,7 @@ const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [warning, setWarning] = useState(false);
   const [running, setRunning] = useState(false);
-  const [timeLeft, setTimeleft] = useState(5);
+  const [timeLeft, setTimeleft] = useState(600);
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
   const message = "placed";

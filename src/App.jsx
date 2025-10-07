@@ -49,12 +49,12 @@ export default function App() {
   } = useContext(GomokuContext);
 
   const handlePlayAgain = () => {
-    setTimeleft(5);
+    setTimeleft(600);
     playAgain();
   };
 
   const handleResetAgain = () => {
-    setTimeleft(5);
+    setTimeleft(600);
     resetGame();
   };
 
