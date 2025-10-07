@@ -42,6 +42,9 @@ export default function App() {
     closeInstructions,
     resetWarning,
     warning,
+    startTimer,
+    timeLeft,
+    running,
   } = useContext(GomokuContext);
 
   const rows = isNewGame?.board?.rows ?? 16;
@@ -88,11 +91,12 @@ export default function App() {
         ) : (
           ""
         )}
-        {isGameDraw === 256 ? (
+
+        {isGameDraw === 256 || timeLeft === 0 ? (
           <GameOver
             GameOverText={DrawText}
-            resetGame={resetGame}
             playAgain={playAgain}
+            resetGame={resetGame}
           />
         ) : (
           ""
@@ -110,6 +114,7 @@ export default function App() {
         ) : (
           ""
         )}
+
         <GCP
           playerOne={playerOne}
           playerTwo={playerTwo}
@@ -119,6 +124,9 @@ export default function App() {
           resetGame={resetGame}
           resetWarning={resetWarning}
           warning={warning}
+          startTimer={startTimer}
+          running={running}
+          timeLeft={timeLeft}
         />
       </Background>
     </div>
