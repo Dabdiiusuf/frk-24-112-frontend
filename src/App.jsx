@@ -9,7 +9,7 @@ import {
   GameOver,
   Instructions,
   GCP,
-} from "frk-24-112-components";
+} from "@dabdikeef/components";
 
 export default function App() {
   const {
@@ -24,12 +24,11 @@ export default function App() {
     currentPlayer,
     playAgain,
     showGameOver,
-    setShowGameOver,
     error,
     firstPoints,
     secondPoints,
     firstIcon,
-    resetGame
+    resetGame,
   } = useContext(ApiContext);
 
   const {
@@ -41,11 +40,9 @@ export default function App() {
     showInstructions,
     showModal,
     closeInstructions,
+    resetWarning,
+    warning,
   } = useContext(GomokuContext);
-
-  // if (!isNewGame?.board) return <p>Is Loading</p>;
-
-  // const { rows, cols, tiles } = isNewGame.board;
 
   const rows = isNewGame?.board?.rows ?? 16;
   const cols = isNewGame?.board?.cols ?? 16;
@@ -86,11 +83,21 @@ export default function App() {
             playerTwo={playerTwo}
             createPlayers={createPlayers}
             error={error}
+            warning={warning}
           />
         ) : (
           ""
         )}
-        {isGameDraw === 256 ? <GameOver GameOverText={DrawText} /> : ""}
+        {isGameDraw === 256 ? (
+          <GameOver
+            GameOverText={DrawText}
+            resetGame={resetGame}
+            playAgain={playAgain}
+          />
+        ) : (
+          ""
+        )}
+
         {gameWon && showGameOver ? (
           <GameOver
             GameOverText={randomText}
@@ -110,6 +117,8 @@ export default function App() {
           secondPoints={secondPoints}
           currentPlayer={currentPlayer}
           resetGame={resetGame}
+          resetWarning={resetWarning}
+          warning={warning}
         />
       </Background>
     </div>

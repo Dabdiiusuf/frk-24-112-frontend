@@ -20,6 +20,7 @@ const GomokuContextProvider = ({ children, gameWon }) => {
   const [rowValue, setRowValue] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [warning, setWarning] = useState(false);
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
   const message = "placed";
@@ -61,6 +62,11 @@ const GomokuContextProvider = ({ children, gameWon }) => {
     }
   }, []);
 
+  const resetWarning = () => {
+    setWarning(true);
+    setShowModal(true);
+  };
+
   return (
     <GomokuContext.Provider
       value={{
@@ -73,6 +79,7 @@ const GomokuContextProvider = ({ children, gameWon }) => {
         message,
         showInstructions,
         showModal,
+        warning,
         setPlayerOne,
         setPlayerTwo,
         setRandomText,
@@ -80,7 +87,8 @@ const GomokuContextProvider = ({ children, gameWon }) => {
         openInstructions,
         closeInstructions,
         setShowModal,
-        setShowInstructions
+        setShowInstructions,
+        resetWarning,
       }}
     >
       {children}
