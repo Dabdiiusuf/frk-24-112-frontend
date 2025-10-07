@@ -46,15 +46,21 @@ export default function App() {
     timeLeft,
     setTimeleft,
     running,
+    setRunning,
+    stopTimer,
   } = useContext(GomokuContext);
 
   const handlePlayAgain = () => {
+    stopTimer();
     setTimeleft(600);
+    setRunning(false);
     playAgain();
   };
 
   const handleResetAgain = () => {
+    stopTimer();
     setTimeleft(600);
+    setRunning(false);
     resetGame();
   };
 
