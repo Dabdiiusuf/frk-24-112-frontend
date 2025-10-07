@@ -7,7 +7,7 @@ const ApiContext = createContext(null);
 const ApiContextProvider = ({ children }) => {
   const { API_BASE_URL } = useContext(ConfigContext);
 
-  const { setShowInstructions } = useContext(GomokuContext);
+  const { setShowInstructions, setTimeleft } = useContext(GomokuContext);
   const [isNewGame, setIsNewGame] = useState(null);
   const [showGameOver, setShowGameOver] = useState(false);
   const [playerOne, setplayerOne] = useState(localStorage.getItem("fPlayer"));
@@ -130,9 +130,11 @@ const ApiContextProvider = ({ children }) => {
       setIsGameDraw(0);
       setCurrentPlayer(1);
       setFirstIcon(false);
+      setTimeleft(5);
 
       await fetchNewGame();
       setShowGameOver(false);
+      console.log(showGameOver);
     } catch (e) {
       console.error(e);
     }
@@ -153,7 +155,7 @@ const ApiContextProvider = ({ children }) => {
     setplayerOne(localStorage.getItem("fPlayer"));
 
     setShowInstructions(true);
-  }
+  };
 
   return (
     <ApiContext.Provider
