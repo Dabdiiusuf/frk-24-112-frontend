@@ -52,14 +52,14 @@ export default function App() {
 
   const handlePlayAgain = () => {
     stopTimer();
-    setTimeleft(600);
+    setTimeleft(5);
     setRunning(false);
     playAgain();
   };
 
   const handleResetAgain = () => {
     stopTimer();
-    setTimeleft(600);
+    setTimeleft(5);
     setRunning(false);
     resetGame();
   };
