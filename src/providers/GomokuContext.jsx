@@ -4,6 +4,7 @@ import {
   useEffect,
   useCallback,
   useContext,
+  useRef,
 } from "react";
 import { ApiContext } from "./ApiContext";
 
@@ -22,10 +23,11 @@ const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [warning, setWarning] = useState(false);
   const [running, setRunning] = useState(false);
-  const [timeLeft, setTimeleft] = useState(600);
+  const [timeLeft, setTimeleft] = useState(5);
   const DrawText =
     "Arrr, the battle be fierce and the cannons run dry! Neither crew be claimin’ the seas this day, the game be a stalemate, matey!";
   const message = "placed";
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (!winnerName) return;
@@ -74,10 +76,13 @@ const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
 
     setRunning(true);
 
-    const id = setInterval(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
       setTimeleft((t) => {
         if (t <= 1) {
-          clearInterval(id);
           setRunning(false);
           setShowGameOver(true);
           return 0;
@@ -86,6 +91,13 @@ const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
         return t - 1;
       });
     }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
   };
 
   return (
@@ -114,6 +126,8 @@ const GomokuContextProvider = ({ children, gameWon, setShowGameOver }) => {
         resetWarning,
         startTimer,
         setTimeleft,
+        setRunning,
+        stopTimer,
       }}
     >
       {children}
