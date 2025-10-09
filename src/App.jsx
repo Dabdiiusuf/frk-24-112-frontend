@@ -1,5 +1,5 @@
 import "./App.css";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { ApiContext } from "./providers/ApiContext";
 import { GomokuContext } from "./providers/GomokuContext";
 import {
